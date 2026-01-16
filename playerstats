@@ -1,0 +1,318 @@
+
+--This is a DataStore leaderstats script that is easy to use, and can be edited for any game.
+playerstats = {
+	--Name is the name of the value.
+	--Start is the starting value for new players.
+	--Max is the highest the value can go for constrained values.
+	--Type is the instance type for the value.
+	
+	--Only Name and type is required.
+	--{Name = 'Quirk', Start = 'New Player', Type = 'StringValue'},
+	--{Name = 'Money', Start = 25, Max = 500000000, Type = 'DoubleConstrainedValue'},
+}
+cash = {
+	{Name = 'bank', Type = 'StringValue'},
+}
+character = {
+	{Name = 'acc', Type = 'StringValue'},
+	{Name = 'color', Start = 1, Type = 'StringValue'},
+	{Name = 'face', Type = 'StringValue'},
+	{Name = 'skin', Start = 1, Type = 'StringValue'},
+	{Name = 'style', Start = 1, Type = 'StringValue'},
+	{Name = 'hat', Type = 'StringValue'},
+	{Name = 'pants', Type = 'StringValue'},
+	{Name = 'shirt', Type = 'StringValue'},
+}
+clothing = {
+	{Name = 'accessories', Type = 'StringValue'},
+	{Name = 'hats', Type = 'StringValue'},
+	{Name = 'pants', Type = 'StringValue'},
+	{Name = 'shirts', Type = 'StringValue'},
+}
+home = {
+	{Name = 'basement', Start = 1, Type = 'StringValue'},
+	{Name = 'current', Type = 'StringValue'},
+	{Name = 'specific', Type = 'StringValue'},
+	{Name = 'upstairs', Start = 1, Type = 'StringValue'},
+}
+items = {
+	{Name = 'Hands', Start = 9999, Type = 'StringValue'},
+}
+job = {
+	{Name = 'reputation', Start = 0, Type = 'StringValue'},
+}
+progress = {
+	{Name = 'Bartender', Start = 0, Type = 'StringValue'},
+	{Name = 'Cashier', Start = 0, Type = 'StringValue'},
+	{Name = 'Frycook', Start = 0, Type = 'StringValue'},
+	{Name = 'Hairstylist', Start = 0, Type = 'StringValue'},
+	{Name = 'Janitor', Start = 0, Type = 'StringValue'},
+	{Name = 'Mailroom', Start = 0, Type = 'StringValue'},
+	{Name = 'Nurse', Start = 0, Type = 'StringValue'},
+	{Name = 'Office',Start = 0,  Type = 'StringValue'},
+	{Name = 'Supervisor',Start = 0,  Type = 'StringValue'},
+	{Name = 'Taxi Driver', Start = 0, Type = 'StringValue'},
+	{Name = 'Waiter', Start = 0, Type = 'StringValue'},
+}
+multiplier = {
+	{Name = 'finish',Start = 0, Type = 'StringValue'},
+	{Name = 'start', Start = 0,Type = 'StringValue'},
+}
+prompts = {
+	{Name = 'furniture',Start = 0, Type = 'StringValue'},
+	{Name = 'paint', Start = 0,Type = 'StringValue'},
+	{Name = 'return', Start = 0,Type = 'StringValue'},
+	{Name = 'vehicle',Start = 0, Type = 'StringValue'},
+}
+relation = {
+	{Name = 'friend', Start = 0,Type = 'StringValue'},
+	{Name = 'guest',Start = 0, Type = 'StringValue'},
+}
+statistics = {
+	{Name = 'energy',Start = 1000, Type = 'StringValue'},
+	{Name = 'health', Start = 1000, Type = 'StringValue'},
+	{Name = 'hunger', Start = 1000, Type = 'StringValue'},
+	{Name = 'thirst', Start = 1000, Type = 'StringValue'},
+}
+vehicles = {
+	
+	
+}
+waypoints = {
+	
+}
+--You won't need to edit anything below here.
+Data = game:GetService'DataStoreService':GetDataStore'PlayerData'
+
+game.Players.ChildAdded:connect(function(p)
+	local stats = Instance.new('StringValue', p)
+	stats.Name = 'playerstats'
+	local cashstats = Instance.new('StringValue', stats)
+	cashstats.Name = 'cash'
+	cashstats.Value = 10000
+	local characterstats = Instance.new('StringValue', stats)
+	characterstats.Name = 'character'
+	characterstats.Value = 0
+	local clothingstats = Instance.new('StringValue', stats)
+	clothingstats.Name = 'clothing'
+	local homestats = Instance.new('StringValue', stats)
+	homestats.Name = 'home'
+	local itemstats = Instance.new('StringValue', stats)
+	itemstats.Name = 'items'
+	local multiplierstats = Instance.new('StringValue', stats)
+	multiplierstats.Name = 'multiplier'
+	multiplierstats.Value = 0
+	local promptsstats = Instance.new('StringValue', stats)
+	promptsstats.Name = 'prompts'
+	promptsstats.Value = 0
+	local relationstats = Instance.new('StringValue', stats)
+	relationstats.Name = 'relation'
+	relationstats.Value = 0
+	local vehiclestats = Instance.new('StringValue', stats)
+	vehiclestats.Name = 'vehicle'
+	local waypointstats = Instance.new('StringValue', stats)
+	waypointstats.Name = 'waypoints'
+	waypointstats.Value = 0
+	local jobstats = Instance.new('StringValue', stats)
+	jobstats.Name = 'job'
+	local progressstats = Instance.new('StringValue', jobstats)
+	progressstats.Name = 'progress'
+	local statisstats = Instance.new('StringValue', stats)
+	statisstats.Name = 'stats'
+	for _,v in pairs(playerstats) do
+		local value = Instance.new(v.Type, stats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(cash) do
+		local value = Instance.new(v.Type, cashstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(job) do
+		local value = Instance.new(v.Type, jobstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(progress) do
+		local value = Instance.new(v.Type, progressstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(character) do
+		local value = Instance.new(v.Type, characterstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(clothing) do
+		local value = Instance.new(v.Type, clothingstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(home) do
+		local value = Instance.new(v.Type, homestats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(items) do
+		local value = Instance.new(v.Type, itemstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(multiplier) do
+		local value = Instance.new(v.Type, multiplierstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(prompts) do
+		local value = Instance.new(v.Type, promptsstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(relation) do
+		local value = Instance.new(v.Type, relationstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(statistics) do
+		local value = Instance.new(v.Type, statisstats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	for _,v in pairs(vehicles) do
+		local value = Instance.new(v.Type, vehiclestats)
+		value.Name = v.Name
+		if v.Max then
+			value.MaxValue = v.Max
+		end
+		if v.Min then
+			value.MinValue = v.Min
+		end
+		if v.Start then
+			value.Value = v.Start
+		end
+	end
+	local data = Data:GetAsync('Save_'..p.userId)
+	if data then
+		for i,v in pairs(data) do
+			if stats:FindFirstChild(v.name) then
+				stats[v.name].Value = v.value
+			end
+		end
+		print(p.Name.."'s data has been loaded.")
+	end
+end)
+
+game.Players.PlayerRemoving:connect(function(p)
+	local ls = p:FindFirstChild'Data'
+	if ls then
+		local DataToSave = {}
+		for i,v in pairs(ls:GetChildren()) do
+			table.insert(DataToSave, {name = v.Name, value = v.Value})
+		end
+		pcall(function()
+			Data:SetAsync('Save_'..p.userId, DataToSave) 
+			print(p.Name.."'s data has been saved.")	
+		end)
+	end
+end)
+
+game.OnClose = function()
+	wait(3)
+end
